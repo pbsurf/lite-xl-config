@@ -8,6 +8,7 @@
 # from the build dir, since meson generates it (version substitution).
 #
 # Usage: ./run.sh [lite-xl args...]     e.g. ./run.sh ~/projects/foo
+#        LITE_CLANGD=/usr/bin/clangd ./run.sh ...   to use a different clangd
 set -e
 
 userdir=$(dirname "$(readlink -f "$0")")
@@ -29,5 +30,9 @@ for d in plugins colors fonts; do ln -sfn "$src/data/$d" "$datadir/$d"; done
 find "$datadir/core" -maxdepth 1 -type l ! -exec test -e {} \; -delete  # drop stale links
 for f in "$src"/data/core/*; do ln -sfn "$f" "$datadir/core/"; done
 ln -sfn "$build/start.lua" "$datadir/core/start.lua"
+
+# clangd for the lsp plugin (see init.lua); defaults to the Android NDK's (17.0.2)
+: "${LITE_CLANGD:=$HOME/android-sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/bin/clangd}"
+export LITE_CLANGD
 
 LITE_USERDIR=$userdir exec "$prefix/bin/lite-xl" "$@"

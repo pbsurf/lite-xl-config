@@ -70,6 +70,12 @@ config.plugins.lineguide.enabled = true
 config.plugins.bracketmatch.style = "block"
 config.plugins.bracketmatch.color_char = true
 
+-- clangd for C/C++ (lsp plugin); run.sh sets LITE_CLANGD, else clangd from PATH
+local lspconfig = require "plugins.lsp.config"
+lspconfig.clangd.setup {
+  command = { os.getenv("LITE_CLANGD") or "clangd", "-background-index" }
+}
+
 ---------------------------- Miscellaneous -------------------------------------
 
 -- modify list of files to ignore when indexing the project:
@@ -107,4 +113,3 @@ config.force_scrollbar_status = "expanded"
 --  * breakpoint setting breaks gutter click for selection
 --  * build need to set target_workdir for use by debugger
 --  * output view ... terminal plugin?
--- * need to try LSP/clangd
