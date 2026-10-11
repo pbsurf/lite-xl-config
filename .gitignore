@@ -3,3 +3,4 @@ session.lua
 ws/
 build/
 lpm/
+*.state
