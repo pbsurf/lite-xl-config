@@ -1,1 +1,0 @@
-../../lite-xl-plugins/plugins/search_ui.lua
