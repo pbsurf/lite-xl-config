@@ -9,8 +9,8 @@ local style = require "core.style"
 
 ------------------------------ Themes ----------------------------------------
 
--- light theme:
-core.reload_module("colors.summer")
+-- light theme, matching Qt Creator (see colors/qtcreator.lua):
+core.reload_module("colors.qtcreator")
 
 --------------------------- Key bindings -------------------------------------
 
@@ -66,6 +66,10 @@ config.plugins.scale.default_scale = 2.0
 
 config.plugins.lineguide.enabled = true
 
+-- Qt Creator style matching parens: red on green (colors from the theme)
+config.plugins.bracketmatch.style = "block"
+config.plugins.bracketmatch.color_char = true
+
 ---------------------------- Miscellaneous -------------------------------------
 
 -- modify list of files to ignore when indexing the project:
@@ -88,7 +92,6 @@ config.line_limit = 110
 config.force_scrollbar_status = "expanded"
 
 -- Remaining issues --
--- * syntax colors - /home/mwhite/.config/QtProject/qtcreator/styles/customized.xml
 -- * gutter drag to select lines
 -- * Ctrl-Tab should use history
 --  * see tab_switcher plugin
