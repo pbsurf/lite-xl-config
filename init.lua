@@ -70,10 +70,17 @@ config.plugins.lineguide.enabled = true
 config.plugins.bracketmatch.style = "block"
 config.plugins.bracketmatch.color_char = true
 
--- clangd for C/C++ (lsp plugin); run.sh sets LITE_CLANGD, else clangd from PATH
+-- clangd for C/C++ (lsp plugin); run.sh sets LITE_CLANGD, else clangd from PATH.
+-- Limited for this 2-core, swapless machine: one worker thread (background
+-- indexing ran two in parallel and exhausted memory on ~/maps/explore),
+-- low-priority indexing, and preambles on disk rather than in memory.
 local lspconfig = require "plugins.lsp.config"
 lspconfig.clangd.setup {
-  command = { os.getenv("LITE_CLANGD") or "clangd", "-background-index" }
+  command = {
+    os.getenv("LITE_CLANGD") or "clangd",
+    "--background-index", "--background-index-priority=low",
+    "-j=1", "--pch-storage=disk", "--malloc-trim"
+  }
 }
 
 ---------------------------- Miscellaneous -------------------------------------
