@@ -3,7 +3,10 @@
 -- repl: evaluate Lua sent from outside the editor (client: ../lxeval).
 --
 -- Requests are files req-<id>.lua in $XDG_RUNTIME_DIR/lite-xl-<pid>/, and each reply
--- is written to resp-<id>.  Requests are picked up every 10ms by a core thread.
+-- is written to resp-<id>.  Requests are picked up every 10ms by a core thread.  While
+-- the window is unfocused and idle, lite-xl blocks in system.wait_event() with no
+-- timeout and threads don't run, so the directory is also watched with a dirmonitor,
+-- whose inotify thread wakes the event loop when a request arrives.
 --
 -- If Lua is stuck in a loop, that thread never runs.  For that case every coroutine
 -- has a count hook registered but not armed (an armed hook roughly halves the speed
@@ -194,8 +197,14 @@ local function service(context)
   servicing = false
 end
 
+-- wakes the event loop on changes in dir; check() below consumes the change (until
+-- then the monitor thread keeps posting wake-up events)
+local monitor = dirmonitor.new()
+monitor:watch(dir)
+
 core.add_thread(function()
   while true do
+    monitor:check(function() end)
     last_service = system.get_time()
     local ok, err = pcall(service)
     abort_requested = false -- only meaningful while stuck
