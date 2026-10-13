@@ -7,9 +7,18 @@ local keymap = require "core.keymap"
 local config = require "core.config"
 local style = require "core.style"
 
+------------------------------ Plugins ---------------------------------------
+
+-- extras to load from data/extra/plugins (lite-xl-plugins and others); those in
+-- data/plugins load unless disabled with config.plugins.<name> = false
+config.extra_plugins = {
+  "lsp", "lintplus", "build", "debugger", "repl",
+  "bracketmatch", "ephemeral_tabs", "language_make", "language_yaml", "search_ui",
+}
+
 ------------------------------ Themes ----------------------------------------
 
--- light theme, matching Qt Creator (see colors/qtcreator.lua):
+-- light theme, matching Qt Creator (see data/extra/colors/qtcreator.lua):
 core.reload_module("colors.qtcreator")
 
 --------------------------- Key bindings -------------------------------------
