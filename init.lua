@@ -112,6 +112,7 @@ config.ignore_files = { "^build$", "^%." }
 config.line_limit = 110
 
 config.force_scrollbar_status = "expanded"
+config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 
 -- Remaining issues --
 -- * gutter drag to select lines
