@@ -115,7 +115,6 @@ config.force_scrollbar_status = "expanded"
 config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 
 -- Remaining issues --
--- * gutter drag to select lines
 -- * Ctrl-Tab should use history
 --  * see tab_switcher plugin
 -- * Markers (Bookmarks) needs a view showing all bookmarks in project
@@ -127,6 +126,5 @@ config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 --  * breakpoint list
 --  * threads view
 --  * locals view
---  * breakpoint setting breaks gutter click for selection
 --  * build need to set target_workdir for use by debugger
 --  * output view ... terminal plugin?
