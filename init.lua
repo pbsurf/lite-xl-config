@@ -91,8 +91,11 @@ config.plugins.lineguide.enabled = true
 -- immediately, each further tab press going one tab further back in history
 config.plugins.tab_switcher = { show_list = true }
 
--- lintplus (LSP diagnostics): squiggly underline under each problem's range
-config.lint = { lens_style = "squiggle" }
+-- lintplus (LSP diagnostics): squiggly underline under each problem's range;
+-- the message shows on mouse hover (lsp plugin) and in the status bar
+config.lint = { lens_style = "squiggle", inline_messages = false }
+-- hover shows errors and warnings; ctrl+hover also symbol info and hints
+config.plugins.lsp = { mouse_hover_mode = "important" }
 
 -- Qt Creator style matching parens: red on green (colors from the theme)
 config.plugins.bracketmatch.style = "block"
