@@ -14,6 +14,7 @@ local style = require "core.style"
 config.extra_plugins = {
   "lsp", "lintplus", "build", "debugger", "repl",
   "bracketmatch", "ephemeral_tabs", "language_make", "language_yaml", "search_ui",
+  "tab_switcher",
 }
 
 ------------------------------ Themes ----------------------------------------
@@ -27,8 +28,19 @@ core.reload_module("colors.qtcreator")
 -- keymap.add { ["ctrl+escape"] = "core:quit" }
 
 -- pass 'true' for second parameter to overwrite an existing binding
--- keymap.add({ ["ctrl+pageup"] = "root:switch-to-previous-tab" }, true)
--- keymap.add({ ["ctrl+pagedown"] = "root:switch-to-next-tab" }, true)
+
+-- ctrl+tab cycles tabs in most-recently-used order (tab_switcher plugin): a list
+-- opens while ctrl is held, each tab press moves down it, releasing ctrl switches.
+-- ctrl+pageup/pagedown cycle in displayed order, as in browsers; moving tabs goes
+-- to ctrl+shift+pageup/pagedown.
+keymap.add({
+  ["ctrl+tab"] = { "tab-switcher:previous-tab", "tab-switcher:switch-to-last-tab" },
+  ["ctrl+shift+tab"] = { "tab-switcher:next-tab", "tab-switcher:switch-to-oldest-tab" },
+  ["ctrl+pageup"] = "root:switch-to-previous-tab",
+  ["ctrl+pagedown"] = "root:switch-to-next-tab",
+  ["ctrl+shift+pageup"] = "root:move-tab-left",
+  ["ctrl+shift+pagedown"] = "root:move-tab-right",
+}, true)
 
 ------------------------------- Fonts ----------------------------------------
 
@@ -75,6 +87,10 @@ config.plugins.scale.default_scale = 2.0
 
 config.plugins.lineguide.enabled = true
 
+-- ctrl+tab: true shows the list of tabs while ctrl is held; false switches
+-- immediately, each further tab press going one tab further back in history
+config.plugins.tab_switcher = { show_list = true }
+
 -- Qt Creator style matching parens: red on green (colors from the theme)
 config.plugins.bracketmatch.style = "block"
 config.plugins.bracketmatch.color_char = true
@@ -115,8 +131,6 @@ config.force_scrollbar_status = "expanded"
 config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 
 -- Remaining issues --
--- * Ctrl-Tab should use history
---  * see tab_switcher plugin
 -- * Markers (Bookmarks) needs a view showing all bookmarks in project
 --  * maybe start from https://github.com/drmargarido/TodoTreeView/blob/master/todotreeview-xl.lua
 -- * Build:
