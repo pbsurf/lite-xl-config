@@ -9,17 +9,12 @@ local style = require "core.style"
 
 ------------------------------ Plugins ---------------------------------------
 
--- extras to load from data/extra/plugins (lite-xl-plugins and others); those in
--- data/plugins load unless disabled with config.plugins.<name> = false
-config.extra_plugins = {
-  "lsp", "lintplus", "build", "debugger", "repl",
-  "bracketmatch", "ephemeral_tabs", "language_make", "language_yaml", "search_ui",
-  "tab_switcher",
-}
+-- add-ons are installed by lpm with addons.sh; all installed plugins load, like
+-- those in data/plugins, unless disabled with config.plugins.<name> = false
 
 ------------------------------ Themes ----------------------------------------
 
--- light theme, matching Qt Creator (see data/extra/colors/qtcreator.lua):
+-- light theme, matching Qt Creator (addons/colors/qtcreator.lua in lite-xl):
 core.reload_module("colors.qtcreator")
 
 --------------------------- Key bindings -------------------------------------

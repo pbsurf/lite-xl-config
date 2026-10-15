@@ -4,3 +4,8 @@ ws/
 build/
 lpm/
 *.state
+
+# installed by lpm (addons.sh)
+plugins/
+libraries/
+colors/
