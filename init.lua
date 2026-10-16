@@ -155,6 +155,7 @@ config.max_project_files = 20000
 config.ignore_files = { "^build$", "^%." }
 
 config.line_limit = 110
+config.highlight_current_line = false
 
 config.force_scrollbar_status = "expanded"
 config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
