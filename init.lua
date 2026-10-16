@@ -96,6 +96,8 @@ config.plugins.tab_switcher = { show_list = true }
 config.lint = { lens_style = "squiggle", inline_messages = false }
 -- hover shows errors and warnings; ctrl+hover also symbol info and hints
 config.plugins.lsp = { mouse_hover_mode = "important" }
+-- word completions only on ctrl+space; LSP's still pop up while typing
+config.plugins.autocomplete.symbols_on_typing = false
 
 -- Qt Creator style matching parens: red on green (colors from the theme)
 config.plugins.bracketmatch.style = "block"
