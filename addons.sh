@@ -6,7 +6,7 @@
 # Ours come from the lite-xl checkout (its manifest.json) and are symlinked, so edits
 # there take effect on restart; upstream ones are copies, changed only by an lpm
 # install/upgrade. Order matters: a dependency installed first keeps its install
-# mode (json as a copy, widget, which search_ui uses, as our symlinked one).
+# mode (json as a copy, widget as our symlinked one).
 #
 # LITE_USERDIR selects another user dir, e.g. a copy for headless testing.
 set -e
@@ -16,6 +16,6 @@ export LITE_USERDIR=${LITE_USERDIR:-$here}
 
 "$lpm" install --no-install-optional json
 "$lpm" install --no-install-optional --symlink \
-  widget shapes lsp lintplus build debugger repl language_yaml tab_switcher tab_overflow menubar highlight_selection nerdicons qtcreator
+  widget shapes lsp lintplus build debugger repl language_yaml tab_switcher tab_overflow menubar highlight_selection search_ui nerdicons qtcreator
 "$lpm" install --no-install-optional \
-  bracketmatch ephemeral_tabs language_make search_ui
+  bracketmatch ephemeral_tabs language_make
