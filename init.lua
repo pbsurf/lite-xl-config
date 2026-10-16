@@ -6,6 +6,7 @@ local core = require "core"
 local keymap = require "core.keymap"
 local config = require "core.config"
 local style = require "core.style"
+local common = require "core.common"
 
 ------------------------------ Plugins ---------------------------------------
 
@@ -99,6 +100,29 @@ config.plugins.lsp = { mouse_hover_mode = "important" }
 -- Qt Creator style matching parens: red on green (colors from the theme)
 config.plugins.bracketmatch.style = "block"
 config.plugins.bracketmatch.color_char = true
+
+-- terminal plugin: colors of the system terminal (urxvt: white on black, its
+-- default palette), shown as given (no contrast adjustment)
+config.plugins.terminal.background = { common.color "#000000" }
+config.plugins.terminal.text = { common.color "#ffffff" }
+config.plugins.terminal.minimum_contrast_ratio = 0
+-- compact like urxvt: 13 px cells for the same 24 px Menlo, whose advance is 14.45 px
+-- (urxvt's letterSpace -3 applies to cells sized by the widest ASCII glyph, 16 px)
+config.plugins.terminal.letter_spacing = (13 - 14.45) / 24
+-- and 29 px rows (Menlo's line height here is 27 px)
+config.plugins.terminal.line_spacing = 2 / 24
+-- ANSI colors 0-15 (black red green yellow blue magenta cyan white, then bright),
+-- changed in place once the plugin has loaded: setting `colors` would replace all
+-- 256 (16-255 are the standard xterm cube and grays)
+core.add_thread(function()
+  local palette = {
+    "#000000", "#cd0000", "#00cd00", "#cdcd00", "#0000cd", "#cd00cd", "#00cdcd", "#faebd7",
+    "#404040", "#ff0000", "#00ff00", "#ffff00", "#0000ff", "#ff00ff", "#00ffff", "#ffffff",
+  }
+  for i, hex in ipairs(palette) do
+    config.plugins.terminal.colors[i - 1] = { common.color(hex) }
+  end
+end)
 
 -- clangd for C/C++ (lsp plugin); scripts/run.sh sets LITE_CLANGD, else clangd from PATH.
 -- Limited for this 2-core, swapless machine: one worker thread (background
