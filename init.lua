@@ -18,6 +18,10 @@ local common = require "core.common"
 config.plugins.toolbarview = false
 config.plugins.build = { toolbar = false }
 
+-- no OS title bar: the header bar (headerbar plugin) is the title bar, with the
+-- menu button, file browser toggle, back/forward and the window controls
+config.borderless = true
+
 -- plugins' key bindings to keep (false: none); unlisted plugins keep them all
 config.plugin_keys = {
   -- none of build's shortcuts: its commands are in the status bar's build menu
