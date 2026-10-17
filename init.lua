@@ -38,10 +38,6 @@ keymap.add({
   ["ctrl+shift+pagedown"] = "root:move-tab-right",
 }, true)
 
--- alt+drag selects a rectangular block (ctrl+drag still does too, after ctrl+click
--- adds a cursor)
-keymap.add { ["alt+1lclick"] = "doc:select-block" }
-
 ------------------------------- Fonts ----------------------------------------
 
 style.code_font = renderer.font.load("/home/mwhite/.fonts/Menlo-Regular.ttf", 12 * SCALE)
