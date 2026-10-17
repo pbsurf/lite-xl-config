@@ -38,6 +38,13 @@ keymap.add({
   ["ctrl+shift+pagedown"] = "root:move-tab-right",
 }, true)
 
+-- f9 toggles spell checking (as in SciTE), taken from the debugger's breakpoint
+-- toggle (breakpoints: click the gutter left of the line numbers); the terminal
+-- still gets f9. Once plugins have loaded, as they add their bindings after this.
+core.add_thread(function()
+  keymap.add({ ["f9"] = { "terminal:f9", "spell-check:toggle" } }, true)
+end)
+
 ------------------------------- Fonts ----------------------------------------
 
 style.code_font = renderer.font.load("/home/mwhite/.fonts/Menlo-Regular.ttf", 12 * SCALE)
