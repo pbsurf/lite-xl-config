@@ -60,7 +60,11 @@ keymap.add { ["f9"] = "spell-check:toggle" }
 
 ------------------------------- Fonts ----------------------------------------
 
-style.code_font = renderer.font.load("/home/mwhite/.fonts/Menlo-Regular.ttf", 12 * SCALE)
+-- Menlo if installed (it isn't free, so not part of this config), else the default
+local menlo = HOME .. "/.fonts/Menlo-Regular.ttf"
+if system.get_file_info(menlo) then
+  style.code_font = renderer.font.load(menlo, 12 * SCALE)
+end
 
 -- customize fonts:
 -- style.font = renderer.font.load(DATADIR .. "/fonts/FiraSans-Regular.ttf", 14 * SCALE)
