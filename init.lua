@@ -38,12 +38,8 @@ keymap.add({
   ["ctrl+shift+pagedown"] = "root:move-tab-right",
 }, true)
 
--- f9 toggles spell checking (as in SciTE), taken from the debugger's breakpoint
--- toggle (breakpoints: click the gutter left of the line numbers); the terminal
--- still gets f9. Once plugins have loaded, as they add their bindings after this.
-core.add_thread(function()
-  keymap.add({ ["f9"] = { "terminal:f9", "spell-check:toggle" } }, true)
-end)
+-- f9 toggles spell checking (as in SciTE)
+keymap.add { ["f9"] = "spell-check:toggle" }
 
 ------------------------------- Fonts ----------------------------------------
 
@@ -101,6 +97,9 @@ config.plugins.tab_switcher = { show_list = true }
 config.lint = { lens_style = "squiggle", inline_messages = false }
 -- hover shows errors and warnings; ctrl+hover also symbol info and hints
 config.plugins.lsp = { mouse_hover_mode = "important" }
+-- debugger: no f8 (start) / f9 (breakpoint) / f12 (drawer) outside a debug
+-- session; start from the menu or Do Command, click the gutter for breakpoints
+config.plugins.debugger = { idle_keys = false }
 -- word completions only on ctrl+space; LSP's still pop up while typing
 config.plugins.autocomplete.symbols_on_typing = false
 
