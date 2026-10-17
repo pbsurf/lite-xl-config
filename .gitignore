@@ -1,6 +1,7 @@
 # runtime state written by lite-xl
 session.lua
 ws/
+storage/
 build/
 lpm/
 *.state

@@ -13,6 +13,18 @@ local common = require "core.common"
 -- add-ons are installed by lpm with addons.sh; all installed plugins load, like
 -- those in data/plugins, unless disabled with config.plugins.<name> = false
 
+-- no toolbars under the file browser: the main one's buttons are in the menus,
+-- the build one's in the status bar's build menu
+config.plugins.toolbarview = false
+config.plugins.build = { toolbar = false }
+
+-- plugins' key bindings to keep (false: none); unlisted plugins keep them all
+config.plugin_keys = {
+  -- none of build's shortcuts: its commands are in the status bar's build menu
+  -- and the menubar; but clicking and escape in Build Messages stay
+  build = { "lclick", "escape" },
+}
+
 ------------------------------ Themes ----------------------------------------
 
 -- light theme, matching Qt Creator (addons/colors/qtcreator.lua in lite-xl):
@@ -37,6 +49,11 @@ keymap.add({
   ["ctrl+shift+pageup"] = "root:move-tab-left",
   ["ctrl+shift+pagedown"] = "root:move-tab-right",
 }, true)
+
+-- ctrl+b toggles the file browser, as in VS Code, instead of building (build
+-- plugin); in a terminal it still goes to the shell. Bindings made here come
+-- before those plugins add; config.plugin_keys chooses which of theirs to keep.
+keymap.add { ["ctrl+b"] = { "terminal:start-of-text", "treeview:toggle" } }
 
 -- f9 toggles spell checking (as in SciTE)
 keymap.add { ["f9"] = "spell-check:toggle" }
