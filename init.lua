@@ -84,6 +84,8 @@ style.code_font = renderer.font.load("/home/mwhite/.fonts/Menlo-Regular.ttf", 12
 -- or env var LITE_SCALE=2
 config.plugins.scale.mode = "ui"
 config.plugins.scale.default_scale = 2.0
+-- no ctrl+wheel zoom
+config.plugins.scale.use_mousewheel = false
 
 config.plugins.lineguide.enabled = true
 
