@@ -16,6 +16,6 @@ export LITE_USERDIR=${LITE_USERDIR:-$here}
 
 "$lpm" install --no-install-optional json
 "$lpm" install --no-install-optional --symlink \
-  widget shapes lsp lintplus build debugger repl language_yaml tab_switcher tab_overflow menubar highlight_selection search_ui ephemeral_tabs navigate nerdicons terminal openurl qtcreator
+  widget shapes lsp lintplus build debugger repl language_yaml tab_switcher tab_overflow menubar highlight_selection search_ui ephemeral_tabs navigate nerdicons terminal spellcheck openurl qtcreator
 "$lpm" install --no-install-optional \
   bracketmatch language_make
