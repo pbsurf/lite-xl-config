@@ -190,6 +190,9 @@ config.ignore_files = { "^build$", "^%." }
 config.line_limit = 110
 config.highlight_current_line = false
 
+-- tabs as wide as their names, up to config.max_tab_width
+config.fit_tab_width = true
+
 config.force_scrollbar_status = "expanded"
 config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 
