@@ -10,3 +10,6 @@ lpm/
 plugins/
 libraries/
 colors/
+
+# settings for this machine only (loaded by init.lua)
+local.lua

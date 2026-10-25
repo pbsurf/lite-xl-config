@@ -208,3 +208,12 @@ config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 --  * locals view
 --  * build need to set target_workdir for use by debugger
 --  * output view ... terminal plugin?
+
+------------------------------ This machine ------------------------------------
+
+-- Settings for this machine only (font paths, scale, git or clangd at another
+-- location), in local.lua beside this file: not in the repo. Last, so it can
+-- override anything above; dofile, so it runs again with this file (on changing
+-- the project).
+local local_init = USERDIR .. PATHSEP .. "local.lua"
+if system.get_file_info(local_init) then dofile(local_init) end
