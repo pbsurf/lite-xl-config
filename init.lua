@@ -206,7 +206,6 @@ config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 --  * breakpoint list
 --  * threads view
 --  * locals view
---  * build need to set target_workdir for use by debugger
 --  * output view ... terminal plugin?
 
 ------------------------------ This machine ------------------------------------
