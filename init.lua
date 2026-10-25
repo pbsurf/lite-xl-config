@@ -33,6 +33,8 @@ config.plugin_keys = {
 
 -- light theme, matching Qt Creator (addons/colors/qtcreator.lua in lite-xl):
 core.reload_module("colors.qtcreator")
+-- text closer to the gutter's fill than the default half padding
+style.gutter_gap = math.floor(style.padding.x / 4)
 
 --------------------------- Key bindings -------------------------------------
 
