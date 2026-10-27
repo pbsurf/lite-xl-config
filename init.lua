@@ -66,10 +66,18 @@ keymap.add { ["f9"] = "spell-check:toggle" }
 
 ------------------------------- Fonts ----------------------------------------
 
--- Menlo if installed (it isn't free, so not part of this config), else the default
-local menlo = HOME .. "/.fonts/Menlo-Regular.ttf"
-if system.get_file_info(menlo) then
-  style.code_font = renderer.font.load(menlo, 12 * SCALE)
+-- The first of these that's installed (Menlo isn't free, so it's not part of this config;
+-- Meslo LG XS is its Windows stand-in, in the system or the user's fonts), else the default
+local code_fonts = {
+  HOME .. "/.fonts/Menlo-Regular.ttf",
+  (os.getenv("WINDIR") or "C:\\Windows") .. "\\Fonts\\MesloLGXS-Regular.ttf",
+  (os.getenv("LOCALAPPDATA") or "") .. "\\Microsoft\\Windows\\Fonts\\MesloLGXS-Regular.ttf",
+}
+for _, path in ipairs(code_fonts) do
+  if system.get_file_info(path) then
+    style.code_font = renderer.font.load(path, 12 * SCALE)
+    break
+  end
 end
 
 -- customize fonts:
