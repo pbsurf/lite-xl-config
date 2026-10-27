@@ -189,13 +189,14 @@ end
 local clangd = find_clangd()
 if clangd then
   local lspconfig = require "plugins.lsp.config"
-  lspconfig.clangd.setup {
-    command = {
-      clangd,
-      "--background-index", "--background-index-priority=low",
-      "-j=1", "--pch-storage=disk", "--malloc-trim"
-    }
+  local command = {
+    clangd,
+    "--background-index", "--background-index-priority=low",
+    "-j=1", "--pch-storage=disk"
   }
+  -- glibc builds only: clangd elsewhere (Windows) rejects it and exits
+  if PLATFORM == "Linux" then table.insert(command, "--malloc-trim") end
+  lspconfig.clangd.setup { command = command }
 end
 
 ---------------------------- Miscellaneous -------------------------------------
