@@ -13,3 +13,6 @@ colors/
 
 # settings for this machine only (loaded by init.lua)
 local.lua
+
+# downloaded by addons.bat (clangd)
+tools/

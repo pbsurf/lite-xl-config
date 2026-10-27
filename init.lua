@@ -165,18 +165,38 @@ core.add_thread(function()
   end
 end)
 
--- clangd for C/C++ (lsp plugin); scripts/run.sh sets LITE_CLANGD, else clangd from PATH.
+-- clangd for C/C++ (lsp plugin): LITE_CLANGD (scripts/run.sh sets it), else the one
+-- addons.bat installs into tools\ here (Windows), else clangd from PATH; none: no setup,
+-- rather than the lsp plugin retrying a missing server.
 -- Limited for this 2-core, swapless machine: one worker thread (background
 -- indexing ran two in parallel and exhausted memory on ~/maps/explore),
 -- low-priority indexing, and preambles on disk rather than in memory.
-local lspconfig = require "plugins.lsp.config"
-lspconfig.clangd.setup {
-  command = {
-    os.getenv("LITE_CLANGD") or "clangd",
-    "--background-index", "--background-index-priority=low",
-    "-j=1", "--pch-storage=disk", "--malloc-trim"
+local function find_clangd()
+  local exe = PLATFORM == "Windows" and "clangd.exe" or "clangd"
+  local candidates = {
+    os.getenv("LITE_CLANGD") or false,
+    USERDIR .. PATHSEP .. "tools" .. PATHSEP .. "clangd" .. PATHSEP .. "bin" .. PATHSEP .. exe,
   }
-}
+  local sep = PLATFORM == "Windows" and ";" or ":"
+  for dir in (os.getenv("PATH") or ""):gmatch("[^" .. sep .. "]+") do
+    table.insert(candidates, dir .. PATHSEP .. exe)
+  end
+  for _, path in ipairs(candidates) do
+    if path and system.get_file_info(path) then return path end
+  end
+end
+
+local clangd = find_clangd()
+if clangd then
+  local lspconfig = require "plugins.lsp.config"
+  lspconfig.clangd.setup {
+    command = {
+      clangd,
+      "--background-index", "--background-index-priority=low",
+      "-j=1", "--pch-storage=disk", "--malloc-trim"
+    }
+  }
+end
 
 ---------------------------- Miscellaneous -------------------------------------
 
