@@ -10,8 +10,16 @@ local common = require "core.common"
 
 ------------------------------ Plugins ---------------------------------------
 
--- add-ons are installed by lpm with addons.sh; all installed plugins load, like
--- those in data/plugins, unless disabled with config.plugins.<name> = false
+-- ours are used from the lite-xl checkout beside this config (edits there take
+-- effect on restart, nothing to copy), their native modules (libterminal) from a
+-- build: LITE_BUILD's, else the one the editor runs from in place; first, so the
+-- rest can require them. The upstream ones are installed here by addons.sh (lpm)
+-- or addons.bat. All plugins load, like those in data/plugins, unless disabled
+-- with config.plugins.<name> = false
+core.add_addon_dir(USERDIR .. PATHSEP .. ".." .. PATHSEP .. "lite-xl" .. PATHSEP .. "addons")
+core.add_addon_dir((os.getenv("LITE_BUILD") or EXEDIR) .. PATHSEP .. "addons")
+-- the checkout's one we don't use (addons.sh doesn't install it)
+config.plugins.minimap = false
 
 -- no toolbars under the file browser: the main one's buttons are in the menus,
 -- the build one's in the status bar's build menu
