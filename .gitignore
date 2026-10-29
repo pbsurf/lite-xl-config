@@ -14,5 +14,6 @@ colors/
 # settings for this machine only (loaded by init.lua)
 local.lua
 
-# downloaded by addons.bat (clangd)
+# downloaded by addons.bat (clangd, the spellcheck dictionary)
 tools/
+dictionaries/
