@@ -177,18 +177,10 @@ core.add_thread(function()
   end
 end)
 
--- clangd for C/C++ (lsp plugin): LITE_CLANGD (scripts/run.sh sets it), else the one
--- addons.bat installs into tools\ here (Windows), else clangd from PATH; none: no setup,
--- rather than the lsp plugin retrying a missing server.
--- Limited for this 2-core, swapless machine: one worker thread (background
--- indexing ran two in parallel and exhausted memory on ~/maps/explore),
--- low-priority indexing, and preambles on disk rather than in memory.
-local function find_clangd()
-  local exe = PLATFORM == "Windows" and "clangd.exe" or "clangd"
-  local candidates = {
-    os.getenv("LITE_CLANGD") or false,
-    USERDIR .. PATHSEP .. "tools" .. PATHSEP .. "clangd" .. PATHSEP .. "bin" .. PATHSEP .. exe,
-  }
+-- path of the executable name: the first of candidates that exists, else from PATH
+local function find_exe(name, candidates)
+  local exe = PLATFORM == "Windows" and name .. ".exe" or name
+  candidates = candidates or {}
   local sep = PLATFORM == "Windows" and ";" or ":"
   for dir in (os.getenv("PATH") or ""):gmatch("[^" .. sep .. "]+") do
     table.insert(candidates, dir .. PATHSEP .. exe)
@@ -198,7 +190,17 @@ local function find_clangd()
   end
 end
 
-local clangd = find_clangd()
+-- clangd for C/C++ (lsp plugin): LITE_CLANGD (scripts/run.sh sets it), else the one
+-- addons.bat installs into tools\ here (Windows), else clangd from PATH; none: no setup,
+-- rather than the lsp plugin retrying a missing server.
+-- Limited for this 2-core, swapless machine: one worker thread (background
+-- indexing ran two in parallel and exhausted memory on ~/maps/explore),
+-- low-priority indexing, and preambles on disk rather than in memory.
+local clangd = find_exe("clangd", {
+  os.getenv("LITE_CLANGD") or false,
+  USERDIR .. PATHSEP .. "tools" .. PATHSEP .. "clangd" .. PATHSEP .. "bin"
+    .. PATHSEP .. (PLATFORM == "Windows" and "clangd.exe" or "clangd"),
+})
 if clangd then
   local lspconfig = require "plugins.lsp.config"
   local command = {
@@ -209,6 +211,14 @@ if clangd then
   -- glibc builds only: clangd elsewhere (Windows) rejects it and exits
   if PLATFORM == "Linux" then table.insert(command, "--malloc-trim") end
   lspconfig.clangd.setup { command = command }
+end
+
+-- Python (pip install ty ruff): ty for types, completion and navigation, ruff for
+-- lint diagnostics and formatting; the lsp plugin runs both on .py files. Set up
+-- only if found, as clangd.
+-- ty finds packages from VIRTUAL_ENV or the project's .venv, else python3 on PATH.
+for _, name in ipairs({ "ty", "ruff" }) do
+  if find_exe(name) then require("plugins.lsp.config")[name].setup {} end
 end
 
 ---------------------------- Miscellaneous -------------------------------------
