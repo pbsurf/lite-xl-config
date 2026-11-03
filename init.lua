@@ -131,9 +131,10 @@ config.plugins.scale.use_mousewheel = false
 
 config.plugins.lineguide.enabled = true
 
--- strip trailing whitespace on save (the line with the caret keeps what's
--- left of the caret); files always end with a newline anyway
+-- strip trailing whitespace on save, the caret's line included; files always
+-- end with a newline anyway
 config.plugins.trimwhitespace.enabled = true
+config.plugins.trimwhitespace.trim_caret_line = true
 
 -- ctrl+tab: true shows the list of tabs while ctrl is held; false switches
 -- immediately, each further tab press going one tab further back in history
