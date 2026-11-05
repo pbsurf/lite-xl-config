@@ -18,8 +18,9 @@ local common = require "core.common"
 -- with config.plugins.<name> = false
 core.add_addon_dir(USERDIR .. PATHSEP .. ".." .. PATHSEP .. "lite-xl" .. PATHSEP .. "addons")
 core.add_addon_dir((os.getenv("LITE_BUILD") or EXEDIR) .. PATHSEP .. "addons")
--- the checkout's one we don't use (addons.sh doesn't install it)
+-- the checkout's ones we don't use (addons.sh doesn't install them)
 config.plugins.minimap = false
+config.plugins.debugger = false -- replaced by debug
 
 -- no toolbars under the file browser: the main one's buttons are in the menus,
 -- the build one's in the status bar's build menu
@@ -145,9 +146,10 @@ config.plugins.tab_switcher = { show_list = true }
 config.lint = { lens_style = "squiggle", inline_messages = false }
 -- hover shows errors and warnings; ctrl+hover also symbol info and hints
 config.plugins.lsp = { mouse_hover_mode = "important" }
--- debugger: no f8 (start) / f9 (breakpoint) / f12 (drawer) outside a debug
--- session; start from the menu or Do Command, click the gutter for breakpoints
-config.plugins.debugger = { idle_keys = false }
+-- debug: no f5 / f8 / f7 (start) or f9 (breakpoint) outside a debug session;
+-- start from the menu or Do Command (ctrl+f8 runs to the cursor, starting if
+-- need be), click the gutter for breakpoints
+config.plugins.debug = { idle_keys = false }
 -- word completions only on ctrl+space; LSP's still pop up while typing
 config.plugins.autocomplete.symbols_on_typing = false
 
