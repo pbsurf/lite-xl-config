@@ -146,7 +146,7 @@ config.plugins.tab_switcher = { show_list = true }
 config.lint = { lens_style = "squiggle", inline_messages = false }
 -- hover shows errors and warnings; ctrl+hover also symbol info and hints
 config.plugins.lsp = { mouse_hover_mode = "important" }
--- debug: no f5 / f8 / f7 (start) or f9 (breakpoint) outside a debug session;
+-- debug: no f5 / f8 (start) or f9 (breakpoint) outside a debug session;
 -- start from the menu or Do Command (ctrl+f8 runs to the cursor, starting if
 -- need be), click the gutter for breakpoints
 config.plugins.debug = { idle_keys = false }
