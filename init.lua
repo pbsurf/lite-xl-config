@@ -52,13 +52,18 @@ style.gutter_gap = math.floor(style.padding.x / 4)
 
 -- pass 'true' for second parameter to overwrite an existing binding
 
--- ctrl+tab cycles tabs in most-recently-used order (tab_switcher plugin): a list
--- opens while ctrl is held, each tab press moves down it, releasing ctrl switches.
+-- ctrl+tab cycles the current split's tabs in most-recently-used order
+-- (tab_switcher plugin), as in VS Code: each tab press switches one tab further
+-- back, and releasing ctrl ends it (only the tab you end on counts as visited).
+-- ctrl+` does the same through every split's tabs, showing them in a list while
+-- ctrl is held and switching on release. Moving between splits is alt+j/l/i/k.
 -- ctrl+pageup/pagedown cycle in displayed order, as in browsers; moving tabs goes
 -- to ctrl+shift+pageup/pagedown.
 keymap.add({
-  ["ctrl+tab"] = { "tab-switcher:previous-tab", "tab-switcher:switch-to-last-tab" },
-  ["ctrl+shift+tab"] = { "tab-switcher:next-tab", "tab-switcher:switch-to-oldest-tab" },
+  ["ctrl+tab"] = { "tab-switcher:previous-tab", "tab-switcher:switch-to-last-tab-in-current-split" },
+  ["ctrl+shift+tab"] = { "tab-switcher:next-tab", "tab-switcher:switch-to-oldest-tab-in-current-split" },
+  ["ctrl+`"] = { "tab-switcher:previous-tab", "tab-switcher:switch-to-last-tab" },
+  ["ctrl+shift+`"] = { "tab-switcher:next-tab", "tab-switcher:switch-to-oldest-tab" },
   ["ctrl+pageup"] = "root:switch-to-previous-tab",
   ["ctrl+pagedown"] = "root:switch-to-next-tab",
   ["ctrl+shift+pageup"] = "root:move-tab-left",
@@ -137,8 +142,8 @@ config.plugins.lineguide.enabled = true
 config.plugins.trimwhitespace.enabled = true
 config.plugins.trimwhitespace.trim_caret_line = true
 
--- ctrl+tab: true shows the list of tabs while ctrl is held; false switches
--- immediately, each further tab press going one tab further back in history
+-- ctrl+`: true shows the list of tabs while ctrl is held; false switches
+-- immediately, each further press going one tab further back in history
 config.plugins.tab_switcher = { show_list = true }
 
 -- lintplus (LSP diagnostics): squiggly underline under each problem's range;
