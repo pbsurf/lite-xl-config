@@ -20,7 +20,6 @@ core.add_addon_dir(USERDIR .. PATHSEP .. ".." .. PATHSEP .. "lite-xl" .. PATHSEP
 core.add_addon_dir((os.getenv("LITE_BUILD") or EXEDIR) .. PATHSEP .. "addons")
 -- the checkout's ones we don't use (addons.sh doesn't install them)
 config.plugins.minimap = false
-config.plugins.debugger = false -- replaced by debug
 
 -- no toolbars under the file browser: the main one's buttons are in the menus,
 -- the build one's in the status bar's build menu
@@ -260,12 +259,6 @@ config.disabled_transitions.scroll = true  -- scroll instantly, no ease-out
 --  * maybe start from https://github.com/drmargarido/TodoTreeView/blob/master/todotreeview-xl.lua
 -- * Build:
 --  * wrap text in Build Messages; allow viewing even if successful
--- * Debugger: very incomplete
---  * use tree view for variable views
---  * breakpoint list
---  * threads view
---  * locals view
---  * output view ... terminal plugin?
 
 ------------------------------ This machine ------------------------------------
 
