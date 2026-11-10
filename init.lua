@@ -41,6 +41,13 @@ config.plugin_keys = {
 
 -- light theme, matching Qt Creator (addons/colors/qtcreator.lua in lite-xl):
 core.reload_module("colors.qtcreator")
+-- the header bar (the title bar, borderless) as xfwm4 draws the other windows'
+-- (~/.themes/Default-dark-active): Breeze Dark's window colors while focused,
+-- Breeze's (the GTK theme's) while not
+style.headerbar = { common.color "#31363b" }
+style.headerbar_text = { common.color "#fcfcfc" }
+style.headerbar_dim = { common.color "#a1a9b1" }
+style.headerbar_inactive = { common.color "#eff0f1" }
 -- text closer to the gutter's fill than the default half padding
 style.gutter_gap = math.floor(style.padding.x / 4)
 
