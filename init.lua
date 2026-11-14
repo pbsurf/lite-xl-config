@@ -89,6 +89,7 @@ keymap.add { ["f9"] = "spell-check:toggle" }
 -- The first of these that's installed (Menlo isn't free, so it's not part of this config;
 -- Meslo LG XS is its Windows stand-in, in the system or the user's fonts), else the default
 local code_fonts = {
+  (os.getenv("XDG_DATA_HOME") or HOME .. "/.local/share") .. "/fonts/Menlo-Regular.ttf",
   HOME .. "/.fonts/Menlo-Regular.ttf",
   (os.getenv("WINDIR") or "C:\\Windows") .. "\\Fonts\\MesloLGXS-Regular.ttf",
   (os.getenv("LOCALAPPDATA") or "") .. "\\Microsoft\\Windows\\Fonts\\MesloLGXS-Regular.ttf",
