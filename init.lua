@@ -225,7 +225,11 @@ if clangd then
   }
   -- glibc builds only: clangd elsewhere (Windows) rejects it and exits
   if PLATFORM == "Linux" then table.insert(command, "--malloc-trim") end
-  lspconfig.clangd.setup { command = command }
+  -- one malloc arena: with glibc's default (one per thread, up to 8 per core),
+  -- memory each thread's parsing and indexing freed stays in its arena, and
+  -- clangd on ~/maps/explore held 1.15 GB for 300 MB in use; with one, 510 MB,
+  -- as fast (-j=1: one busy thread). Other allocators ignore it.
+  lspconfig.clangd.setup { command = command, env = { MALLOC_ARENA_MAX = "1" } }
 end
 
 -- Python (pip install ty ruff): ty for types, completion and navigation, ruff for
