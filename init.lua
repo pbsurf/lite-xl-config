@@ -211,6 +211,8 @@ end
 -- Limited for this 2-core, swapless machine: one worker thread (background
 -- indexing ran two in parallel and exhausted memory on ~/maps/explore),
 -- low-priority indexing, and preambles on disk rather than in memory.
+-- No #include added when accepting a completion: missing includes are added on
+-- request, with the "Add #include" fix (ctrl+. on the error, lsp:code-actions).
 local clangd = find_exe("clangd", {
   os.getenv("LITE_CLANGD") or false,
   USERDIR .. PATHSEP .. "tools" .. PATHSEP .. "clangd" .. PATHSEP .. "bin"
@@ -221,7 +223,7 @@ if clangd then
   local command = {
     clangd,
     "--background-index", "--background-index-priority=low",
-    "-j=1", "--pch-storage=disk"
+    "-j=1", "--pch-storage=disk", "--header-insertion=never"
   }
   -- glibc builds only: clangd elsewhere (Windows) rejects it and exits
   if PLATFORM == "Linux" then table.insert(command, "--malloc-trim") end
